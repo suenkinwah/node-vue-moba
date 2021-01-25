@@ -8,6 +8,8 @@ const app = express();
 app.use(require('cors')());
 //使用await函数这些需要加入中间件
 app.use(express.json());
+//托管静态文件
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 
 //导出到admin里的index用

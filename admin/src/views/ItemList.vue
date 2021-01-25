@@ -1,16 +1,20 @@
 <template>
     <div>
-        <h1>分类列表</h1>
-<!--        //items为表格数据-->
+        <h1>物品列表</h1>
+        <!--        //items为表格数据-->
         <el-table :data="items">
-<!--            //prop为字段-->
+            <!--            //prop为字段-->
             <el-table-column prop="_id" label="ID" width="230">
             </el-table-column>
-            <el-table-column prop="parent.name" label="上级分类">
-            </el-table-column>
-            <el-table-column prop="name" label="分类名称">
+
+            <el-table-column prop="name" label="物品名称">
             </el-table-column>
 
+            <el-table-column prop="icon" label="图标">
+                <template slot-scope="scope">
+                    <img :src="scope.row.icon" style="height:3rem;">
+                </template>
+            </el-table-column>
 
             <el-table-column
                     fixed="right"
@@ -18,11 +22,11 @@
                     width="180">
                 <template slot-scope="scope">
 
-<!--                    $router.push为点击后跳转到edit页面，${id}为跳转当前点击的id地址，scope为当前，row为这一行-->
+                    <!--                    $router.push为点击后跳转到edit页面，${id}为跳转当前点击的id地址，scope为当前，row为这一行-->
                     <el-button type="primary" size="small"
-                    @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+                               @click="$router.push(`/items/edit/${scope.row._id}`)">编辑</el-button>
 
-<!--                    remove移除，scope.row整个一行删除-->
+                    <!--                    remove移除，scope.row整个一行删除-->
                     <el-button type="primary" size="small"
                                @click="remove(scope.row)">删除</el-button>
                 </template>
@@ -40,19 +44,19 @@
             }
         },
         methods:{
-          async fetch(){
-              //找到接口
-              const res = await this.$http.get("rest/categories");
-              //得到数据后items为res.data
-              this.items = res.data;
-          },
+            async fetch(){
+                //找到接口
+                const res = await this.$http.get("rest/items");
+                //得到数据后items为res.data
+                this.items = res.data;
+            },
             async remove(row){
                 this.$confirm(`是否确定要删除分类"${row.name}"`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then( async () => {
-                    const res = await this.$http.delete(`rest/categories/${row._id}`);
+                    const res = await this.$http.delete(`rest/items/${row._id}`);
                     this.$message({
                         type: 'success',
                         message: '删除成功!'

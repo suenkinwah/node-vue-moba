@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
     //字段类型
     name:{type:String},
-    parent:{type:mongoose.SchemaTypes.ObjectId, ref:'Category'}
+    icon:{type:String}
 });
 
 //导出mongoose，schema字段，在admin文件夹里的index.js引用
-module.exports = mongoose.model('Category', schema);
+module.exports = mongoose.model('Item', schema);
