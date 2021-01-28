@@ -1,14 +1,13 @@
 <template>
     <div>
-        <h1>分类列表</h1>
+        <h1>文章列表</h1>
 <!--        //items为表格数据-->
         <el-table :data="items">
 <!--            //prop为字段-->
             <el-table-column prop="_id" label="ID" width="230">
             </el-table-column>
-            <el-table-column prop="parent.name" label="上级分类">
-            </el-table-column>
-            <el-table-column prop="name" label="分类名称">
+
+            <el-table-column prop="title" label="标题">
             </el-table-column>
 
 
@@ -20,7 +19,7 @@
 
 <!--                    $router.push为点击后跳转到edit页面，${id}为跳转当前点击的id地址，scope为当前，row为这一行-->
                     <el-button type="primary" size="small"
-                    @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+                    @click="$router.push(`/articles/edit/${scope.row._id}`)">编辑</el-button>
 
 <!--                    remove移除，scope.row整个一行删除-->
                     <el-button type="primary" size="small"
@@ -32,6 +31,7 @@
 </template>
 
 <script>
+
     export default {
         data(){
             return {
@@ -42,17 +42,17 @@
         methods:{
           async fetch(){
               //找到接口
-              const res = await this.$http.get("rest/categories");
+              const res = await this.$http.get("rest/articles");
               //得到数据后items为res.data
               this.items = res.data;
           },
             async remove(row){
-                this.$confirm(`是否确定要删除分类"${row.name}"`, '提示', {
+                this.$confirm(`是否确定要删除文章"${row.title}"`, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then( async () => {
-                    const res = await this.$http.delete(`rest/categories/${row._id}`);
+                    const res = await this.$http.delete(`rest/articles/${row._id}`);
                     this.$message({
                         type: 'success',
                         message: '删除成功!'

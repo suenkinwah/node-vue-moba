@@ -11,6 +11,8 @@ app.use(express.json());
 //托管静态文件
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
+//在app.set设置变量
+app.set('secret', 'i23sdesdf');
 
 //导出到admin里的index用
 require('./routes/admin')(app);
